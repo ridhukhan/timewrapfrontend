@@ -1,7 +1,7 @@
 import React from "react";
-import Data from "../assets/Rolex.json";
+import Data from "../assets/Casio.json";
 
-const Rolex = () => {
+const Casio = () => {
   return (
     <div className="border mt-28 border-gray-700 rounded-xl p-5 bg-black ">
 
@@ -42,4 +42,4 @@ const Rolex = () => {
   );
 };
 
-export default Rolex;
+export default Casio;
