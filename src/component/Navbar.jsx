@@ -1,7 +1,25 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null);
+    navigate("/");
+  };
+
   const items = [
     { name: "HOME", path: "/" },
     { name: "MENS WATCH", path: "/mens" },
@@ -10,7 +28,9 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="bg-black h-12 flex items-center justify-center fixed w-full top-0 z-50 shadow-[4px_10px_15px_#555]">
+    <div className="bg-black h-12 flex items-center justify-between px-10 fixed w-full top-0 z-50 shadow-[4px_10px_15px_#555]">
+
+      {/* LEFT MENU */}
       <nav>
         <ul className="text-white flex gap-7">
           {items.map((item) => (
@@ -29,6 +49,35 @@ const Navbar = () => {
           ))}
         </ul>
       </nav>
+
+      {/* RIGHT SIDE */}
+      <div className="text-white flex items-center gap-4">
+
+        {user ? (
+          <>
+            {/* USER NAME */}
+            <span className="text-sky-400 font-semibold">
+              {user.name}
+            </span>
+
+            {/* LOGOUT ICON */}
+            <button
+              onClick={handleLogout}
+              className="text-xl hover:text-red-400 transition"
+            >
+              🚪
+            </button>
+          </>
+        ) : (
+          <NavLink
+            to="/login"
+            className="text-2xl hover:text-sky-400 transition"
+          >
+            👤
+          </NavLink>
+        )}
+
+      </div>
     </div>
   );
 };

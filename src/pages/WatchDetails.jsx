@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom'
-
+import axios from "axios"
+import { toast } from 'sonner'
 const WatchDetails = () => {
   const location = useLocation()
   const { item } = location.state
@@ -9,10 +10,25 @@ const WatchDetails = () => {
 const [name,setName]=useState("")
 const [phone,setPhone]=useState("")
 const [adress,setAdress]=useState("")
-
-  const handleform =(e)=>{
+  const handleform =async(e)=>{
   e.preventDefault()
+  try {
+    await axios.post("http://localhost:3000/user/order",{
+  customername:name,
+  phone,
+  adress,
+  price:item.price,
+  quantity,
+  watchname:item.name
+},{withCredentials:true}
 
+)
+toast.success("order confirm success")
+
+  } catch (error) {
+    toast.error("order faild")
+    console.log(error)
+  }
 }
   return (
     <div style={{ paddingTop: '60px' }} className="min-h-screen bg-zinc-950 text-white">
@@ -80,12 +96,12 @@ const [adress,setAdress]=useState("")
           </div>
 <div className="bg-zinc-900 border border-zinc-700 rounded-2xl p-6 shadow-xl shadow-sky-900/20 w-full max-w-md mx-auto mt-6">
   <h2 className="text-xl font-bold text-sky-400 tracking-widest uppercase mb-6 text-center">
-    🚀 Order Information
+    📜
+ Order Information
   </h2>
 
   <form onSubmit={handleform} className="flex flex-col gap-5">
 
-    {/* Name */}
     <div className="flex flex-col gap-1">
       <label className="text-zinc-400 text-xs uppercase tracking-widest font-semibold">
         Full Name
@@ -95,13 +111,12 @@ const [adress,setAdress]=useState("")
         onChange={(e) => setName(e.target.value)}
         type="text"
         placeholder="Type your name"
-        className="bg-zinc-800 border border-zinc-600 focus:border-sky-400 focus:outline-none rounded-xl px-4 py-3 text-white placeholder-zinc-500 text-sm transition-all duration-200"
+        className="bg-zinc-800 border border-zinc-600 focus:border-sky-400 focus:outline-none rounded-xl px-4 py-5 text-white placeholder-zinc-500 text-sm transition-all duration-200"
       />
     </div>
 
-    {/* Phone */}
     <div className="flex flex-col gap-1">
-      <label className="text-zinc-400 text-xs uppercase tracking-widest font-semibold">
+      <label className="text-zinc-400 text-xs uppercase tracking-widest font-semibold py-5">
         Phone Number
       </label>
       <input
@@ -113,7 +128,6 @@ const [adress,setAdress]=useState("")
       />
     </div>
 
-    {/* Address */}
     <div className="flex flex-col gap-1">
       <label className="text-zinc-400 text-xs uppercase tracking-widest font-semibold">
         Delivery Address
@@ -131,7 +145,9 @@ const [adress,setAdress]=useState("")
       type="submit"
       className="w-full py-4 rounded-xl bg-sky-500 hover:bg-sky-400 text-black font-bold text-lg tracking-wider uppercase shadow-lg shadow-sky-500/30 hover:shadow-sky-400/50 transition-all duration-300 active:scale-95 mt-2"
     >
-      🛒 Place Order
+      
+🛒
+ Place Order
     </button>
 
   </form>
