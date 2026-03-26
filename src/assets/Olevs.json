@@ -1,0 +1,29 @@
+
+
+
+[
+    {
+        "id":1,
+        "name":"Olevs Luxary watch",
+        "price":1390,
+        "img":"/olevs/olevsluxary.jpeg"
+    },
+    {
+        "id":2,
+        "name":"Olevs Gold",
+        "price":1390,
+        "img":"/olevs/olevsgold.jpeg"
+    },{
+        "id":3,
+        "name":"Olevs Black",
+        "price":1390,
+        "img":"/olevs/olevsblack.jpeg"
+    },
+    {
+        "id":4,
+        "name":"Sky Blue",
+        "price":1390,
+        "img":"/olevs/olevsskyblue.jpeg"
+
+    }
+]
