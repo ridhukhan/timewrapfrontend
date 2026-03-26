@@ -6,11 +6,17 @@ const WatchDetails = () => {
   const { item } = location.state
   const [quantity, setQuantity] = useState(1)
   const [bigImg, setBigImg] = useState(item.img)
+const [name,setName]=useState("")
+const [phone,setPhone]=useState("")
+const [adress,setAdress]=useState("")
 
+  const handleform =(e)=>{
+  e.preventDefault()
+
+}
   return (
     <div style={{ paddingTop: '60px' }} className="min-h-screen bg-zinc-950 text-white">
 
-      {/* top name banner */}
       <div className="bg-gradient-to-r from-sky-900 via-sky-700 to-zinc-900 py-4 px-8 shadow-lg shadow-sky-900/40">
         <h1 className="text-2xl md:text-3xl font-bold tracking-widest uppercase text-white drop-shadow">
           {item.name}
@@ -20,10 +26,8 @@ const WatchDetails = () => {
 
       <div className="max-w-5xl mx-auto px-6 py-10 flex flex-col md:flex-row gap-10">
 
-        {/* left - images */}
         <div className="flex flex-col items-center gap-5 flex-1">
 
-          {/* big image */}
           <div className="w-full max-w-sm bg-zinc-900 rounded-2xl border border-zinc-700 shadow-2xl shadow-sky-900/20 overflow-hidden flex items-center justify-center p-6">
             <img
               src={bigImg}
@@ -32,7 +36,6 @@ const WatchDetails = () => {
             />
           </div>
 
-          {/* thumbnails */}
           <div className="flex gap-3">
             <img onClick={() => setBigImg(item.img)} src={item.img} alt="watch" className="w-16 h-16 rounded-xl border-2 border-zinc-700 hover:border-sky-400 hover:shadow-lg hover:shadow-sky-500/50 hover:scale-110 cursor-pointer p-1 bg-zinc-900 object-contain transition-all duration-300" />
             <img onClick={() => setBigImg(item.img1)} src={item.img1} alt="watch1" className="w-16 h-16 rounded-xl border-2 border-zinc-700 hover:border-sky-400 hover:shadow-lg hover:shadow-sky-500/50 hover:scale-110 cursor-pointer p-1 bg-zinc-900 object-contain transition-all duration-300" />
@@ -41,10 +44,8 @@ const WatchDetails = () => {
           </div>
         </div>
 
-        {/* right - details */}
         <div className="flex flex-col gap-6 flex-1 justify-center">
 
-          {/* price box */}
           <div className="bg-gradient-to-br from-zinc-800 to-zinc-900 border border-sky-500/30 rounded-2xl p-5 shadow-xl shadow-sky-900/20">
             <p className="text-zinc-400 text-sm uppercase tracking-widest mb-1">Total Price</p>
             <p className="text-4xl font-extrabold text-sky-400 tracking-tight">
@@ -53,7 +54,6 @@ const WatchDetails = () => {
             <p className="text-zinc-500 text-sm mt-1">${item.price} × {quantity} unit{quantity > 1 ? 's' : ''}</p>
           </div>
 
-          {/* quantity */}
           <div>
             <p className="text-zinc-400 text-sm uppercase tracking-widest mb-3">Quantity</p>
             <div className="flex items-center gap-4">
@@ -78,12 +78,64 @@ const WatchDetails = () => {
               <span className="text-zinc-500 text-sm">Max: 5</span>
             </div>
           </div>
+<div className="bg-zinc-900 border border-zinc-700 rounded-2xl p-6 shadow-xl shadow-sky-900/20 w-full max-w-md mx-auto mt-6">
+  <h2 className="text-xl font-bold text-sky-400 tracking-widest uppercase mb-6 text-center">
+    🚀 Order Information
+  </h2>
 
-          {/* buy button */}
-          <button className="w-full py-4 rounded-xl bg-sky-500 hover:bg-sky-400 text-black font-bold text-lg tracking-wider uppercase shadow-lg shadow-sky-500/30 hover:shadow-sky-400/50 transition-all duration-300 active:scale-95">
-            🛒 Add to Cart
-          </button>
+  <form onSubmit={handleform} className="flex flex-col gap-5">
 
+    {/* Name */}
+    <div className="flex flex-col gap-1">
+      <label className="text-zinc-400 text-xs uppercase tracking-widest font-semibold">
+        Full Name
+      </label>
+      <input
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        type="text"
+        placeholder="Type your name"
+        className="bg-zinc-800 border border-zinc-600 focus:border-sky-400 focus:outline-none rounded-xl px-4 py-3 text-white placeholder-zinc-500 text-sm transition-all duration-200"
+      />
+    </div>
+
+    {/* Phone */}
+    <div className="flex flex-col gap-1">
+      <label className="text-zinc-400 text-xs uppercase tracking-widest font-semibold">
+        Phone Number
+      </label>
+      <input
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
+        type="number"
+        placeholder="Type your phone number"
+        className="bg-zinc-800 border border-zinc-600 focus:border-sky-400 focus:outline-none rounded-xl px-4 py-3 text-white placeholder-zinc-500 text-sm transition-all duration-200"
+      />
+    </div>
+
+    {/* Address */}
+    <div className="flex flex-col gap-1">
+      <label className="text-zinc-400 text-xs uppercase tracking-widest font-semibold">
+        Delivery Address
+      </label>
+      <textarea
+        value={adress}
+        onChange={(e) => setAdress(e.target.value)}
+        placeholder="Write your full delivery address"
+        rows={3}
+        className="bg-zinc-800 border border-zinc-600 focus:border-sky-400 focus:outline-none rounded-xl px-4 py-3 text-white placeholder-zinc-500 text-sm transition-all duration-200 resize-none"
+      />
+    </div>
+
+    <button
+      type="submit"
+      className="w-full py-4 rounded-xl bg-sky-500 hover:bg-sky-400 text-black font-bold text-lg tracking-wider uppercase shadow-lg shadow-sky-500/30 hover:shadow-sky-400/50 transition-all duration-300 active:scale-95 mt-2"
+    >
+      🛒 Place Order
+    </button>
+
+  </form>
+</div>
         </div>
       </div>
     </div>
