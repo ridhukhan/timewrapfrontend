@@ -6,7 +6,11 @@
         "id":1,
         "name":"Rolex Tiger Eye",
         "price":1390,
-        "img":"/rolex/rolexgold.jpeg"
+        "img":"/rolex/rolexgold.jpeg",
+        "img1":"/rolex/rolex1.jpeg",
+        "img2":"/rolex/rolex2.jpeg",
+        "img3":"/rolex/rolex3.jpeg"
+
     },
     {
         "id":2,

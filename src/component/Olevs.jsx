@@ -1,7 +1,9 @@
 import React from "react";
 import Data from "../assets/Olevs.json";
+import { useNavigate } from "react-router-dom";
 
 const Olevs = () => {
+    const navigate =useNavigate()
   return (
     <div className="border mt-28 border-gray-700 rounded-xl p-5 bg-black ">
 
@@ -26,7 +28,7 @@ const Olevs = () => {
                 ${item.price}
               </h3>
 
-              <button className="w-full mt-3 py-2 border border-sky-400 text-sky-400 rounded-lg hover:bg-sky-400 hover:text-black transition duration-300">
+              <button onClick={()=>navigate("/watch-details",{state:{item}})}  className="w-full mt-3 py-2 border border-sky-400 text-sky-400 rounded-lg hover:bg-sky-400 hover:text-black transition duration-300">
                 Buy Now
               </button>
             </div>
