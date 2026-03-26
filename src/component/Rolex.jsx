@@ -6,7 +6,7 @@ const Rolex = () => {
     <div className="border mt-28 border-gray-700 rounded-xl p-5 bg-black ">
 
       {/* Scroll Container */}
-      <div className="flex gap-6 overflow-x-hidden">
+      <div className="flex gap-6 overflow-x-auto scrollbar-hide">
 
         {Data.map((item) => (
           <div
