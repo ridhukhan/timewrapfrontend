@@ -26,7 +26,7 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        "https://timewrapbackend.onrender.com/auth/login",
+        "https://api.spaytimes.xyz/auth/login",
         form,
         {
           withCredentials: true, // ✅ cookie receive

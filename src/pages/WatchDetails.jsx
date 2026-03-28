@@ -13,7 +13,7 @@ const [adress,setAdress]=useState("")
   const handleform =async(e)=>{
   e.preventDefault()
   try {
-    await axios.post("https://timewrapbackend.onrender.com/user/order",{
+    await axios.post("https://api.spaytimes.xyz/user/order",{
   customername:name,
   phone,
   adress,

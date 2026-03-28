@@ -14,7 +14,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      await axios.post("https://timewrapbackend.onrender.com/auth/register", {
+      await axios.post("https://api.spaytimes.xyz/auth/register", {
         name,
         email,
         password,

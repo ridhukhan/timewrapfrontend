@@ -15,7 +15,7 @@ const AdminDashboard = () => {
     }
 
     axios
-      .get("https://timewrapbackend.onrender.com/admin/orders", {
+      .get("https://api.spaytimes.xyz/admin/orders", {
         withCredentials: true, // ✅ cookie send
       })
       .then((res) => setOrders(res.data))
@@ -29,7 +29,7 @@ const AdminDashboard = () => {
   const handleStatus = async (id, status) => {
     try {
       const res = await axios.patch(
-        `https://timewrapbackend.onrender.com/admin/orders/${id}`,
+        `https://api.spaytimes.xyz/admin/orders/${id}`,
         { status },
         {
           withCredentials: true, // ✅ cookie send
