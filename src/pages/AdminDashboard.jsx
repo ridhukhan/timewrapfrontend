@@ -13,7 +13,7 @@ const AdminDashboard = () => {
     if (!user || user.role !== "admin") return navigate("/login");
 
     axios
-      .get("http://localhost:3000/admin/orders", {
+      .get("https://timewrapbackend.onrender.com/admin/orders", {
         headers: { Authorization: token },
       })
       .then((res) => setOrders(res.data))
@@ -24,7 +24,7 @@ const AdminDashboard = () => {
     const token = localStorage.getItem("token")
     try {
       const res = await axios.patch(
-        `http://localhost:3000/admin/orders/${id}`,
+        `https://timewrapbackend.onrender.com/admin/orders/${id}`,
         { status },
         { headers: { Authorization: token } }
       )
