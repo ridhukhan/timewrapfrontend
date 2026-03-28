@@ -28,7 +28,7 @@ const Rolex = () => {
                 ${item.price}
               </h3>
 
-              <button  onClick={()=>navigate("/watch-details",{state:{item}})} className="w-full mt-3 py-2 border border-sky-400 text-sky-400 rounded-lg hover:bg-sky-400 hover:text-black transition duration-300">
+              <button  onClick={()=>navigate(`/watch-details/${item.id}`)} className="w-full mt-3 py-2 border border-sky-400 text-sky-400 rounded-lg hover:bg-sky-400 hover:text-black transition duration-300">
               
 🛍️
   Buy Now

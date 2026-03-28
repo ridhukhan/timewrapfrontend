@@ -6,7 +6,6 @@ const AdminDashboard = () => {
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
 
-  // 📦 Fetch Orders
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -16,7 +15,7 @@ const AdminDashboard = () => {
 
     axios
       .get("https://api.spaytimes.xyz/admin/orders", {
-        withCredentials: true, // ✅ cookie send
+        withCredentials: true, 
       })
       .then((res) => setOrders(res.data))
       .catch((err) => {
@@ -25,7 +24,6 @@ const AdminDashboard = () => {
       });
   }, [navigate]);
 
-  // 🔄 Update Order Status
   const handleStatus = async (id, status) => {
     try {
       const res = await axios.patch(
