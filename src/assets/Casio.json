@@ -3,24 +3,24 @@
 
 [
     {
-        "id":1,
+        "id":9,
         "name":"casio black diamond",
         "price":1390,
         "img":"/casio/casioblack.jpeg"
     },
     {
-        "id":2,
+        "id":10,
         "name":"casio green tea",
         "price":1390,
         "img":"/casio/casiogreen.jpeg"
     },{
-        "id":3,
+        "id":11,
         "name":"casio luxary",
         "price":1390,
         "img":"/casio/casiokhaki.jpeg"
     },
     {
-        "id":4,
+        "id":12,
         "name":"casio smoke",
         "price":1390,
         "img":"/casio/casiosmoke.jpeg"
