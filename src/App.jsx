@@ -7,6 +7,7 @@ import WatchDetails from "./pages/WatchDetails"
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import {Toaster} from "sonner"
+import AdminDashboard from "./pages/AdminDashboard"
 function App() {
 
   return (
@@ -20,6 +21,8 @@ function App() {
     <Route path="/watch-details" element={<WatchDetails/>}/>
 <Route path="/login" element={<Login/>}/>
 <Route path="/register" element={<Register/>}/>
+<Route path="/admin/dashboard" element={<AdminDashboard/>}/>
+
   </Routes>
   </BrowserRouter>
    </>

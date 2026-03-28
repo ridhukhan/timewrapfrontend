@@ -53,29 +53,25 @@ const Navbar = () => {
       {/* RIGHT SIDE */}
       <div className="text-white flex items-center gap-4">
 
-        {user ? (
-          <>
-            {/* USER NAME */}
-            <span className="text-sky-400 font-semibold">
-              {user.name}
-            </span>
+       {user ? (
+  <>
+    {user.role === "admin" ? (
+      <NavLink to="/admin/dashboard" className="text-sky-400 font-semibold hover:text-sky-300 transition">
+        📊 Dashboard
+      </NavLink>
+    ) : (
+      <span className="text-sky-400 font-semibold">{user.name}</span>
+    )}
 
-            {/* LOGOUT ICON */}
-            <button
-              onClick={handleLogout}
-              className="text-xl hover:text-red-400 transition"
-            >
-              🚪
-            </button>
-          </>
-        ) : (
-          <NavLink
-            to="/login"
-            className="text-2xl hover:text-sky-400 transition"
-          >
-            👤
-          </NavLink>
-        )}
+    <button onClick={handleLogout} className="text-xl hover:text-red-400 transition">
+      🚪
+    </button>
+  </>
+) : (
+  <NavLink to="/login" className="text-2xl hover:text-sky-400 transition">
+    👤
+  </NavLink>
+)}
 
       </div>
     </div>
