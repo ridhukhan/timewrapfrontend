@@ -11,7 +11,7 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     if (user) {
-      const newSocket = io("https://api.spaytimes.xyz", {
+      const newSocket = io("http://localhost:3000", {
         query: { userId: user._id },
         withCredentials: true,
       });
