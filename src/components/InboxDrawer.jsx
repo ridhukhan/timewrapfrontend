@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import axiosInstance from "../api/axios";
 import { useSocket } from "../context/SocketContext";
 
 const InboxDrawer = ({ onClose }) => {
-
   const { onlineUsers } = useSocket();
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -30,7 +29,8 @@ const InboxDrawer = ({ onClose }) => {
       navigate(`/chat/${res.data._id}`);
       onClose();
     } catch (error) {
-      console.log(error);
+      const msg = error.response?.data?.message || "Could not open chat";
+      toast.error(msg);
     }
   };
 
@@ -65,7 +65,9 @@ const InboxDrawer = ({ onClose }) => {
               <div className="w-6 h-6 border-2 border-sky-500 border-t-transparent rounded-full animate-spin" />
             </div>
           ) : users.length === 0 ? (
-            <p className="text-zinc-500 text-sm text-center mt-10">No users found</p>
+            <p className="text-zinc-500 text-sm text-center mt-10 px-4">
+              No friends yet. When someone follows you back, you can message them here.
+            </p>
           ) : (
             users.map((u) => {
               const isOnline = onlineUsers.includes(u._id);
@@ -88,14 +90,12 @@ const InboxDrawer = ({ onClose }) => {
                   </div>
 
                   {/* Info */}
-                  <div className="flex flex-col items-start">
-                    <span className="text-white text-sm font-medium">{u.name}</span>
-                    <span className="text-zinc-500 text-xs">@{u.username}</span>
+                  <div className="flex flex-col items-start min-w-0 text-left">
+                    <span className="text-white text-sm font-medium truncate w-full">{u.name}</span>
+                    <span className="text-zinc-500 text-xs truncate w-full">@{u.username}</span>
                   </div>
-
-                  {/* Online text */}
                   {isOnline && (
-                    <span className="ml-auto text-xs text-green-400">online</span>
+                    <span className="ml-auto flex-shrink-0 text-xs text-green-400">online</span>
                   )}
                 </button>
               );

@@ -63,6 +63,18 @@ const PostCard = ({ post, onDelete }) => {
             alt={post.author?.name}
             className="w-9 h-9 rounded-full object-cover border border-zinc-700"
           />
+          {/* Author info এর নিচে */}
+<div className="flex items-center gap-2">
+  <p className="text-white text-sm font-medium">{post.author?.name}</p>
+  {/* Visibility badge */}
+  <span className={`text-xs px-2 py-0.5 rounded-full ${
+    post.visibility === "friends"
+      ? "bg-purple-500/20 text-purple-400 border border-purple-500/30"
+      : "bg-zinc-700 text-zinc-400"
+  }`}>
+    {post.visibility === "friends" ? "👥 Friends" : "🌐 All"}
+  </span>
+</div>
           <div>
             <p className="text-white text-sm font-medium">{post.author?.name}</p>
             <p className="text-zinc-500 text-xs">

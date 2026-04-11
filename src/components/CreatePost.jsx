@@ -8,6 +8,7 @@ const CreatePost = ({ onPostCreated }) => {
   const [caption, setCaption] = useState("");
   const [media, setMedia] = useState(null);
   const [preview, setPreview] = useState(null);
+  const [visibility, setVisibility] = useState("all");
   const [loading, setLoading] = useState(false);
   const fileRef = useRef(null);
 
@@ -26,6 +27,7 @@ const CreatePost = ({ onPostCreated }) => {
     try {
       const formData = new FormData();
       formData.append("caption", caption);
+      formData.append("visibility", visibility);
       if (media) formData.append("media", media);
 
       const res = await axiosInstance.post("/post/create", formData, {
@@ -36,10 +38,11 @@ const CreatePost = ({ onPostCreated }) => {
       setCaption("");
       setMedia(null);
       setPreview(null);
+      setVisibility("all");
       toast.success("Post created!");
     } catch (error) {
-      toast.error("Failed to create post");
       console.log(error)
+      toast.error("Failed to create post");
     } finally {
       setLoading(false);
     }
@@ -47,7 +50,6 @@ const CreatePost = ({ onPostCreated }) => {
 
   return (
     <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 mb-4">
-      {/* Top row */}
       <div className="flex gap-3">
         <img
           src={user?.profilePic || "https://i.pravatar.cc/150?u=" + user?._id}
@@ -63,7 +65,6 @@ const CreatePost = ({ onPostCreated }) => {
         />
       </div>
 
-      {/* Media preview */}
       {preview && (
         <div className="mt-3 relative inline-block ml-13">
           {media?.type.startsWith("video") ? (
@@ -82,18 +83,45 @@ const CreatePost = ({ onPostCreated }) => {
         </div>
       )}
 
-      {/* Bottom row */}
-      <div className="flex items-center justify-between mt-3 pl-13">
-        <button
-          onClick={() => fileRef.current?.click()}
-          className="flex items-center gap-1.5 text-zinc-400 hover:text-sky-400 text-sm transition-colors px-3 py-1.5 rounded-lg hover:bg-zinc-800"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
-          Photo / Video
-        </button>
-        <input ref={fileRef} type="file" accept="image/*,video/*" onChange={handleMediaChange} className="hidden" />
+      <div className="flex items-center justify-between mt-3">
+
+        <div className="flex items-center gap-2">
+          {/* Media button */}
+          <button
+            onClick={() => fileRef.current?.click()}
+            className="flex items-center gap-1.5 text-zinc-400 hover:text-sky-400 text-sm transition-colors px-3 py-1.5 rounded-lg hover:bg-zinc-800"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            Photo/Video
+          </button>
+          <input ref={fileRef} type="file" accept="image/*,video/*" onChange={handleMediaChange} className="hidden" />
+
+          {/* ✅ Visibility toggle */}
+          <div className="flex bg-zinc-800 border border-zinc-700 rounded-xl p-0.5 gap-0.5">
+            <button
+              onClick={() => setVisibility("all")}
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                visibility === "all"
+                  ? "bg-sky-500 text-black"
+                  : "text-zinc-400 hover:text-white"
+              }`}
+            >
+              🌐 All
+            </button>
+            <button
+              onClick={() => setVisibility("friends")}
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                visibility === "friends"
+                  ? "bg-sky-500 text-black"
+                  : "text-zinc-400 hover:text-white"
+              }`}
+            >
+              👥 Friends
+            </button>
+          </div>
+        </div>
 
         <button
           onClick={handleSubmit}

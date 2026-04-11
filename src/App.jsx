@@ -9,6 +9,8 @@ import Chat from "./pages/Chat";
 import VerifyOtp from "./pages/VerifyOtp";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import Discover from "./pages/Discover";
+
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
   if (loading) return (
@@ -35,7 +37,7 @@ const App = () => {
          <Route path="/verify-otp" element={<VerifyOtp />} />
 <Route path="/forgot-password" element={<ForgotPassword />} />
 <Route path="/reset-password/:token" element={<ResetPassword />} />
-
+<Route path="/discover" element={<ProtectedRoute><Discover /></ProtectedRoute>} />
          
           </Routes>
         </BrowserRouter>

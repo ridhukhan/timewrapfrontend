@@ -4,16 +4,17 @@ import axiosInstance from "../api/axios";
 import toast, { Toaster } from "react-hot-toast";
 import EditProfileModal from "../components/EditProfileModal";
 import PostCard from "../components/PostCard";
+import FollowListModal from "../components/FollowListModal";
 
 const Profile = () => {
   const { user, setUser, logout } = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [posts, setPosts] = useState([]);
   const [loadingPosts, setLoadingPosts] = useState(true);
+  const [followModal, setFollowModal] = useState(null); // "followers" | "following" | null
 
   useEffect(() => {
     if (!user) return;
-
     const fetchUserPosts = async () => {
       try {
         const res = await axiosInstance.get(`/post/user/${user._id}`);
@@ -24,7 +25,6 @@ const Profile = () => {
         setLoadingPosts(false);
       }
     };
-
     fetchUserPosts();
   }, [user]);
 
@@ -34,7 +34,8 @@ const Profile = () => {
       logout();
     } catch (error) {
       toast.error("Logout failed");
-      console.log(error)
+        console.log(error);
+
     }
   };
 
@@ -61,16 +62,30 @@ const Profile = () => {
         </div>
 
         {/* Info */}
-        <div className="flex items-start justify-between mb-6">
+        <div className="flex items-start justify-between mb-4">
           <div>
             <h1 className="text-2xl font-bold">{user?.name}</h1>
             <p className="text-zinc-400 text-sm">@{user?.username}</p>
             <p className="text-zinc-300 text-sm mt-2">{user?.bio || "No bio yet"}</p>
 
-            {/* Post count */}
-            <p className="text-zinc-500 text-sm mt-2">
-              <span className="text-white font-semibold">{posts.length}</span> posts
-            </p>
+            {/* Stats — clickable */}
+            <div className="flex gap-4 mt-3">
+              <p className="text-zinc-500 text-sm">
+                <span className="text-white font-semibold">{posts.length}</span> posts
+              </p>
+              <button
+                onClick={() => setFollowModal("followers")}
+                className="text-zinc-500 text-sm hover:text-white transition-colors"
+              >
+                <span className="text-white font-semibold">{user?.followers?.length || 0}</span> followers
+              </button>
+              <button
+                onClick={() => setFollowModal("following")}
+                className="text-zinc-500 text-sm hover:text-white transition-colors"
+              >
+                <span className="text-white font-semibold">{user?.following?.length || 0}</span> following
+              </button>
+            </div>
           </div>
 
           <div className="flex gap-2 mt-2">
@@ -89,7 +104,6 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* Divider */}
         <div className="border-t border-zinc-800 mb-6" />
 
         {/* Posts */}
@@ -106,19 +120,20 @@ const Profile = () => {
           </div>
         ) : (
           posts.map((post) => (
-            <PostCard
-              key={post._id}
-              post={post}
-              onDelete={handlePostDelete}
-            />
+            <PostCard key={post._id} post={post} onDelete={handlePostDelete} />
           ))
         )}
       </div>
 
+      {/* Modals */}
       {showModal && (
-        <EditProfileModal
-          onClose={() => setShowModal(false)}
-          setUser={setUser}
+        <EditProfileModal onClose={() => setShowModal(false)} setUser={setUser} />
+      )}
+      {followModal && (
+        <FollowListModal
+          type={followModal}
+          userId={user?._id}
+          onClose={() => setFollowModal(null)}
         />
       )}
     </div>

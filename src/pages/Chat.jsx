@@ -33,6 +33,13 @@ const Chat = () => {
         const convRes = await axiosInstance.get(`/message/conversation-info/${conversationId}`);
         setOtherUser(convRes.data);
       } catch (error) {
+        if (error.response?.status === 403) {
+          toast.error(
+            error.response?.data?.message || "You can only chat with friends"
+          );
+          navigate("/");
+          return;
+        }
         console.log(error);
       } finally {
         setLoading(false);
@@ -46,6 +53,7 @@ const Chat = () => {
     if (!socket) return;
 
     socket.on("newMessage", (message) => {
+      if (message.sender._id === user._id) return;
       if (message.conversationId === conversationId) {
         setMessages((prev) => [...prev, message]);
       }
@@ -93,7 +101,9 @@ const Chat = () => {
       setMedia(null);
       setMediaPreview(null);
     } catch (error) {
-      toast.error("Failed to send");
+      const msg =
+        error.response?.data?.message || "Failed to send";
+      toast.error(msg);
       console.log(error)
     } finally {
       setSending(false);
