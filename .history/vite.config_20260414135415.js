@@ -10,8 +10,8 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       manifest: {
-        name: "Kalurghat APP",
-        short_name: "Kalurghat",
+        name: "Social App",
+        short_name: "Social",
         description: "Modern Social Media App",
         theme_color: "#0ea5e9",
         background_color: "#000000",
@@ -19,14 +19,14 @@ export default defineConfig({
         start_url: "/",
         icons: [
           {
-            src: "/kalurghat.jpeg",
+            src: "/pwa-192x192.png",
             sizes: "192x192",
-            type: "image/jpeg"
+            type: "image/png"
           },
           {
-            src: "/kalurghat.jpeg",
+            src: "/pwa-512x512.png",
             sizes: "512x512",
-            type: "image/jpeg"
+            type: "image/png"
           }
         ]
       }
