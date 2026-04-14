@@ -9,6 +9,6 @@ export default defineConfig({
     tailwindcss(),
   ],
   build: {
-    outDir: 'dist', 
+    outDir: 'dist', // নিশ্চিত করুন আপনার বিল্ড ফোল্ডার 'dist' নামে হচ্ছে
   }
 });
