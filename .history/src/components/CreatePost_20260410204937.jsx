@@ -49,7 +49,7 @@ const CreatePost = ({ onPostCreated }) => {
   };
 
   return (
-    <div className="bg-zinc-900 pt-20 border border-zinc-800 rounded-2xl p-4 mb-4">
+    <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 mb-4">
       <div className="flex gap-3">
         <img
           src={user?.profilePic || "https://i.pravatar.cc/150?u=" + user?._id}
