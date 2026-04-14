@@ -55,17 +55,10 @@ const Profile = () => {
         {/* Avatar */}
         <div className="relative -mt-16 mb-4">
           <img
-  src={user?.profilePic || "https://i.pravatar.cc/150?u=" + user?._id}
-  alt="profile"
-  style={{
-    width: "128px",
-    height: "128px",
-    borderRadius: "50%",
-    objectFit: "cover",
-    border: "4px solid #09090b",
-    flexShrink: 0,
-  }}
-/>
+            src={user?.profilePic || "https://i.pravatar.cc/150?u=" + user?._id}
+            alt="profile"
+            className="w-32 h-32 rounded-full border-4 border-zinc-950 object-cover"
+          />
         </div>
 
         {/* Info */}
