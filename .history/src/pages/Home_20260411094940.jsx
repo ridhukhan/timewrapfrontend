@@ -11,25 +11,14 @@ const Home = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [showInbox, setShowInbox] = useState(false);
+  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // ✅ localStorage থেকে initial posts নাও
-  const [posts, setPosts] = useState(() => {
-    try {
-      const cached = localStorage.getItem("feedPosts");
-      return cached ? JSON.parse(cached) : [];
-    } catch {
-      return [];
-    }
-  });
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const res = await axiosInstance.get("/post/feed");
         setPosts(res.data);
-        // ✅ fresh data আসলে cache update করো
-        localStorage.setItem("feedPosts", JSON.stringify(res.data));
       } catch (error) {
         console.log(error);
       } finally {
@@ -40,19 +29,11 @@ const Home = () => {
   }, []);
 
   const handlePostCreated = (newPost) => {
-    setPosts((prev) => {
-      const updated = [newPost, ...prev];
-      localStorage.setItem("feedPosts", JSON.stringify(updated));
-      return updated;
-    });
+    setPosts((prev) => [newPost, ...prev]); // নতুন post সবার উপরে
   };
 
   const handlePostDelete = (postId) => {
-    setPosts((prev) => {
-      const updated = prev.filter((p) => p._id !== postId);
-      localStorage.setItem("feedPosts", JSON.stringify(updated));
-      return updated;
-    });
+    setPosts((prev) => prev.filter((p) => p._id !== postId));
   };
 
   return (
@@ -77,35 +58,41 @@ const Home = () => {
 
         <h1 className="text-lg font-bold tracking-widest text-sky-400">SOCIAL</h1>
 
-        <div className="flex items-center gap-2">
-          {/* Discover icon */}
-          <button
-            onClick={() => navigate("/discover")}
-            className="w-9 h-9 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center hover:bg-zinc-700 hover:border-sky-500 transition-all"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-zinc-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-          </button>
 
-          {/* Inbox icon */}
-          <button
-            onClick={() => setShowInbox(true)}
-            className="w-9 h-9 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center hover:bg-zinc-700 hover:border-sky-500 transition-all"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-zinc-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-            </svg>
-          </button>
-        </div>
+
+{/* Right side — দুইটা icon */}
+<div className="flex items-center gap-2">
+
+  {/* Discover icon */}
+  <button
+    onClick={() => navigate("/discover")}
+    className="w-9 h-9 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center hover:bg-zinc-700 hover:border-sky-500 transition-all"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-zinc-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+  </button>
+
+  {/* Inbox icon */}
+  <button
+    onClick={() => setShowInbox(true)}
+    className="w-9 h-9 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center hover:bg-zinc-700 hover:border-sky-500 transition-all"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-zinc-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+    </svg>
+  </button>
+</div>
       </nav>
 
       {/* Feed */}
       <div className="pt-14 max-w-xl mx-auto px-4 py-6">
+
+        {/* Create post */}
         <CreatePost onPostCreated={handlePostCreated} />
 
-        {/* Loading — cached data থাকলে spinner দেখাবো না */}
-        {loading && posts.length === 0 ? (
+        {/* Posts */}
+        {loading ? (
           <div className="flex justify-center mt-10">
             <div className="w-8 h-8 border-2 border-sky-500 border-t-transparent rounded-full animate-spin" />
           </div>
