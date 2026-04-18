@@ -10,7 +10,6 @@ import VerifyOtp from "./pages/VerifyOtp";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Discover from "./pages/Discover";
-import Reels from "./pages/Reels";
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -39,7 +38,6 @@ const App = () => {
 <Route path="/forgot-password" element={<ForgotPassword />} />
 <Route path="/reset-password/:token" element={<ResetPassword />} />
 <Route path="/discover" element={<ProtectedRoute><Discover /></ProtectedRoute>} />
-<Route path="/reels" element={<ProtectedRoute><Reels /></ProtectedRoute>} />
          
           </Routes>
         </BrowserRouter>
